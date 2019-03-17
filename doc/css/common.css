@@ -13,7 +13,39 @@ html,body{
     padding: 10px;
     margin: 10px;
     color: white;
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     text-align: center;
+    overflow: auto;
 }
+#tip.close{
+    height: 70px;
+    overflow:hidden;
+}
+#tip .go-home{
+    position: absolute;
+    right: 20px;
+    color: white!important;
+}
+
+#tip .open-close{
+    position: absolute;
+    left: 20px;
+    color: white!important;
+}
+
+
+.layout-box {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.layout-item { 
+    width: auto;
+    margin: 10px;
+    text-align: left;
+}
+

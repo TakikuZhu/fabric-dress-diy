@@ -6,23 +6,28 @@
     <title>1-drag-rotate-scale</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="//qidian.gtimg.com/lulu/theme/peak/css/common/ui/Button.css">
+    <link rel="stylesheet" href="../doc/css/luluui/Button.css">
     <script src="js/common.js"></script>
     <script src="../lib/fabric.min.js"></script>
     <script src="../src/main.js"></script>
 </head>
 <body>
     <div id="tip">
-        <h2>图像加载、拖拽、旋转、缩放</h1>
+        <a class="open-close" href="javascript:void(0)">展开/收起</a>
+        <a class="go-home" href="../index.html">首页</a>
+        <h2>图像加载、拖拽、旋转、缩放</h2>
         <label class="ui-button ui-button-primary" tabindex="0" role="button" for="loadImgBtn">选择图像并加载</label>
         <input id="imgName" readonly />
         <input id="loadImgBtn" type="file" style="display: none;" accept="image/gif, image/jpeg"/>
     </div>
     
 </body>
-<script>        
-    loadImgBtn.onchange=function(){
-        loadImgOnChange(this,imgName,fabric_cvs)
+<script>       
+    function init() {
+        loadImgBtn.onchange=function(){
+            loadImgOnChange(this,imgName,fabric_cvs)
+        }
     }
+   
 </script>
 </html>

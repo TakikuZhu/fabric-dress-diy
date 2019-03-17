@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>2-filters</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="../doc/css/luluui/Checkbox.css">
+    <link rel="stylesheet" href="../doc/css/luluui/Switch.css">
+    <link rel="stylesheet" href="../doc/css/luluui/Radio.css">
+    <script src="js/common.js"></script>
+    <script src="../lib/fabric.min.js"></script>
+    <script src="../src/main.js"></script>
+</head>
+<body>
+    <div id="tip" class="close">
+        <a class="open-close" href="javascript:void(0)">展开/收起</a>
+        <a class="go-home" href="../index.html">首页</a>
+        <h2>图像滤镜</h2>
+        <div class="layout-box">
+            <dl class="layout-item">
+                <dt>灰度化<input type="checkbox" id="grayscaleSwitch"><label class="ui-switch" for="grayscaleSwitch"></label></dt>
+                <dd>
+                    <input type="radio" id="average" name="grayscale" disabled>
+                    <label for="average" class="ui-radio"></label><label for="average">平均值</label>
+                </dd>
+                <dd>
+                    <input type="radio" id="lightness" name="grayscale" disabled>
+                    <label for="lightness" class="ui-radio"></label><label for="lightness">lightness</label>
+                </dd>
+                <dd>
+                    <input type="radio" id="luminosity" name="grayscale" disabled>
+                    <label for="luminosity" class="ui-radio"></label><label for="luminosity">luminosity</label>
+                </dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>反转<input type="checkbox" id="invertSwitch"><label class="ui-switch" for="invertSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>Sepia<input type="checkbox" id="sepiaSwitch"><label class="ui-switch" for="sepiaSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>二值化<input type="checkbox" id="blackwhiteSwitch"><label class="ui-switch" for="blackwhiteSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>Brownie<input type="checkbox" id="brownieSwitch"><label class="ui-switch" for="brownieSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>Vintage<input type="checkbox" id="vintageSwitch"><label class="ui-switch" for="vintageSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>Kodachrome<input type="checkbox" id="kodachromeSwitch"><label class="ui-switch" for="kodachromeSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>Technicolor<input type="checkbox" id="technicolorSwitch"><label class="ui-switch" for="technicolorSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>Polaroid<input type="checkbox" id="polaroidSwitch"><label class="ui-switch" for="polaroidSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>马赛克<input type="checkbox" id="pixelateSwitch"><label class="ui-switch" for="pixelateSwitch"></label></dt>
+                <dd>
+                    <input type="range" id="pixelateRange" class="ui-range-input" value="10" min="0" max="100" step="10" disabled>
+                </dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>模糊<input type="checkbox" id="blurSwitch"><label class="ui-switch" for="blurSwitch"></label></dt>
+                <dd>
+                    <input type="range" id="blurRange" class="ui-range-input" value="0.1" min="0" max="1" step="0.01" disabled>
+                </dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>Sharpen<input type="checkbox" id="sharpenSwitch"><label class="ui-switch" for="sharpenSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+            <dl class="layout-item">
+                <dt>Emboss<input type="checkbox" id="embossSwitch"><label class="ui-switch" for="embossSwitch"></label></dt>
+                <dd></dd>
+            </dl>
+        </div>
+        
+       
+    </div>
+    
+</body>
+<script>     
+    function init(){
+        loadImgByUrl("../doc/img/liuyifei.jpg",fabric_cvs);
+        let curFilters=[]
+        grayscaleSwitch.onclick=function(e){    
+            if(grayscaleSwitch.checked){
+                let filterObj={
+                    name:"Grayscale"
+                };
+                let checked= document.querySelector("[name='grayscale']:checked");
+                if(checked){
+                    filterObj["mode"]=checked.id;
+                }
+                curFilters.push(filterObj);
+
+                document.querySelectorAll("[name='grayscale']").forEach(function(ele){
+                    ele.disabled=false;
+                });
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Grayscale";
+                })
+                document.querySelectorAll("[name='grayscale']").forEach(function(ele){
+                    ele.disabled=true;
+                });
+            }
+            filterForActiveObject(curFilters)
+        }
+        average.onclick=function(e){
+            if(average.checked){
+                let grayscale= curFilters.forEach(function(ele){
+                    if(ele.name=="Grayscale"){
+                        ele["mode"]="average";
+                    }
+                })
+                filterForActiveObject(curFilters)
+            }            
+        }
+        lightness.onclick=function(e){
+            if(lightness.checked){
+                let grayscale= curFilters.forEach(function(ele){
+                    if(ele.name=="Grayscale"){
+                        ele["mode"]="lightness";
+                    }
+                })
+                filterForActiveObject(curFilters)
+            }            
+        }
+        luminosity.onclick=function(e){
+            if(lightness.checked){
+                let grayscale= curFilters.forEach(function(ele){
+                    if(ele.name=="Grayscale"){
+                        ele["mode"]="luminosity";
+                    }
+                })
+                filterForActiveObject(curFilters)
+            }            
+        }
+       
+        invertSwitch.onclick=function(e){
+            if(invertSwitch.checked){
+                let filterObj={
+                    name:"Invert"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Invert";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        sepiaSwitch.onclick=function(e){
+            if(sepiaSwitch.checked){
+                let filterObj={
+                    name:"Sepia"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Sepia";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+    
+        blackwhiteSwitch.onclick=function(e){
+            if(blackwhiteSwitch.checked){
+                let filterObj={
+                    name:"BlackWhite"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="BlackWhite";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        brownieSwitch.onclick=function(e){
+            if(brownieSwitch.checked){
+                let filterObj={
+                    name:"Brownie"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Brownie";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        vintageSwitch.onclick=function(e){
+            if(vintageSwitch.checked){
+                let filterObj={
+                    name:"Vintage"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Vintage";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        kodachromeSwitch.onclick=function(e){
+            if(kodachromeSwitch.checked){
+                let filterObj={
+                    name:"Kodachrome"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Kodachrome";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        technicolorSwitch.onclick=function(e){
+            if(technicolorSwitch.checked){
+                let filterObj={
+                    name:"Technicolor"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Technicolor";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        polaroidSwitch.onclick=function(e){
+            if(polaroidSwitch.checked){
+                let filterObj={
+                    name:"Polaroid"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Polaroid";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        pixelateSwitch.onclick=function(e){
+            if(pixelateSwitch.checked){
+                let filterObj={
+                    name:"Pixelate",
+                    blocksize: parseInt(pixelateRange.value, 10)
+                };
+                
+                curFilters.push(filterObj);
+                pixelateRange.disabled=false;
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Pixelate";
+                })
+                pixelateRange.disabled=true;
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        pixelateRange.onchange=function(e){
+            curFilters.forEach(function(ele){
+                if(ele.name=="Pixelate"){
+                    ele["blocksize"]=parseInt(pixelateRange.value, 10);
+                }
+            })
+            filterForActiveObject(curFilters)  
+        }
+
+        blurSwitch.onclick=function(e){
+            if(blurSwitch.checked){
+                let filterObj={
+                    name:"Blur",
+                    blur: parseFloat(blurRange.value, 10)
+                };
+                
+                curFilters.push(filterObj);
+                blurRange.disabled=false;
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Blur";
+                })
+                blurRange.disabled=true;
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        blurRange.onchange=function(e){
+            curFilters.forEach(function(ele){
+                if(ele.name=="Blur"){
+                    ele["blur"]=parseFloat(blurRange.value, 10);
+                }
+            })
+            filterForActiveObject(curFilters)  
+        }
+
+        sharpenSwitch.onclick=function(e){
+            if(sharpenSwitch.checked){
+                let filterObj={
+                    name:"Sharpen"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Sharpen";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+
+        embossSwitch.onclick=function(e){
+            if(embossSwitch.checked){
+                let filterObj={
+                    name:"Emboss"
+                };
+                curFilters.push(filterObj);
+            }else{
+                curFilters= curFilters.filter(function(ele){
+                    return ele.name!="Emboss";
+                })
+            }
+            filterForActiveObject(curFilters) 
+        }
+    }
+
+</script>
+</html>

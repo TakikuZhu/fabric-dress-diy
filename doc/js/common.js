@@ -9,5 +9,14 @@ window.onload=function(){
     console.info("canvas全屏,宽："+cvs.width+",高："+cvs.height)
     fabric_cvs=new fabric.Canvas('cvs');
     console.info("fabric_cvs初始化完成")
+    
+    document.querySelector(".open-close").onclick=function(e){
+        if(tip.classList.contains("close")){
+            tip.classList.remove("close")
+        }else{
+            tip.classList.add("close")
+        }
+    }
+    init()
 }
 
