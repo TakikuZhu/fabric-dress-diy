@@ -17,9 +17,9 @@ function loadImgOnChange(fileInput,fileNameEle,fabric_cvs,positon){
 
 /**
  * 通过Blob加载图片
- * @param {*} imgBlob 
- * @param {*} fabric_cvs 
- * @param {*} positon 
+ * @param {*} imgBlob 图像blob数据
+ * @param {*} fabric_cvs fabric画板
+ * @param {*} positon 图片在画板中的位置
  */
 function loadImgByBlob(imgBlob,fabric_cvs,positon){
     let reader=new FileReader();
@@ -45,13 +45,14 @@ function loadImgByBlob(imgBlob,fabric_cvs,positon){
 
 /**
  * 通过url加载图片
- * @param {*} imgUrl 
- * @param {*} fabric_cvs 
- * @param {*} positon 
+ * @param {*} imgUrl 图片url
+ * @param {*} fabric_cvs fabric画板
+ * @param {*} positon 图片在画板中的位置
  */
 function loadImgByUrl(imgUrl,fabric_cvs,positon){
+    let oImg;
     fabric.Image.fromURL(imgUrl, function(img) {
-        let oImg;
+       
         if(positon&&positon.left&&positon.top){
         }else{
             positon={};
@@ -64,11 +65,15 @@ function loadImgByUrl(imgUrl,fabric_cvs,positon){
         //默认选中
         fabric_cvs.setActiveObject(oImg)
     });
+    function getImgRef(){
+        return oImg;
+    }
+    return getImgRef;
 }
 
 /**
  * 对激活对象增加滤镜
- * @param {*} filters 
+ * @param {*} filters 滤镜数组
  */
 function filterForActiveObject(filters){  
 

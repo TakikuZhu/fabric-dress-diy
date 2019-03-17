@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>3-clipping</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="../doc/css/luluui/Radio.css">
+    <script src="js/common.js"></script>
+    <script src="../lib/fabric.min.js"></script>
+    <script src="../src/main.js"></script>
+</head>
+<body>
+    <div id="tip">
+        <a class="open-close" href="javascript:void(0)">展开/收起</a>
+        <a class="go-home" href="../index.html">首页</a>
+        <h2>图像裁剪</h2>
+        <div class="layout-box">
+            <div class="layout-item">
+                <input type="radio" id="normal" name="shape" >
+                <label for="normal" class="ui-radio"></label><label for="normal">原图</label>
+            </div>
+            <div class="layout-item">
+                <input type="radio" id="circle" name="shape" >
+                <label for="circle" class="ui-radio"></label><label for="circle">圆形</label>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script>       
+    function init() {
+        let getImgRef=loadImgByUrl("../doc/img/liuyifei.jpg",fabric_cvs);
+        let imgRef;
+        normal.onclick=function(){
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+           
+            imgRef.set({
+                clipTo:null
+            })
+            fabric_cvs.renderAll();
+        }
+        circle.onclick=function(){
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;       
+           
+            imgRef.set({
+                clipTo:function (ctx) {
+                    ctx.arc(0, 0, imgRef.width/2, 0, Math.PI * 2, true);
+                }
+            })
+            fabric_cvs.renderAll();
+        }
+    }
+   
+</script>
+</html>
