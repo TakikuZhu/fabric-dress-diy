@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>5-text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="../doc/css/luluui/Button.css">
+    <link rel="stylesheet" href="../doc/css/luluui/Radio.css">
+    <script src="js/common.js"></script>
+    <script src="../lib/fabric.min.js"></script>
+    <script src="../src/main.js"></script>
+    
+</head>
+<body>
+    <div id="tip">
+        <a class="open-close" href="javascript:void(0)">展开/收起</a>
+        <a class="go-home" href="../index.html">首页</a>
+        <h2>文本</h2>
+        <div class="layout-box">
+            <div class="layout-item">
+                <button class="ui-button ui-button-primary" id="editSwitch">打字切换</button>
+            </div>
+            <dl class="layout-item">
+                <dt>对齐方式</dt>
+                <dd>
+                    <input type="radio" id="alignmentLeft" name="alignment" value="left">
+                    <label for="alignmentLeft" class="ui-radio"></label><label for="alignmentLeft">左对齐</label>
+                </dd>
+                <dd>
+                    <input type="radio" id="alignmentCenter" name="alignment" value="center" checked>
+                    <label for="alignmentCenter" class="ui-radio"></label><label for="alignmentCenter">居中</label>
+                </dd>
+                <dd>
+                    <input type="radio" id="alignmentRight" name="alignment" value="right">
+                    <label for="alignmentRight" class="ui-radio"></label><label for="alignmentRight">右对齐</label>
+                </dd>
+            </dl>
+            <div class="layout-item">
+                <label for="fontSize">字体大小
+                <input type="range" id="fontSize" class="ui-range-input" value="100" min="50" max="200" step="1"></label>
+            </div>
+            <div class="layout-item">
+                <label for="fontSize">颜色
+                <input type="color" id="color"></label>
+            </div>
+        </div>
+       
+
+
+    </div>
+    
+</body>
+<script>       
+    function init() {
+        let textbox= initText("",fabric_cvs)
+        editSwitch.onclick=function(){
+            if(textbox.isEditing){
+                textbox.exitEditing()
+            }else{
+                textbox.enterEditing()
+            }
+            
+        }   
+        document.querySelectorAll("[name='alignment']").forEach(function(ele){
+            ele.onclick=function(){
+                textbox.setTextAlign(this.value)
+                fabric_cvs.renderAll();
+            }
+        });
+
+        fontSize.onchange=function(){
+            textbox.setFontSize(this.value)
+            textbox.center()
+            fabric_cvs.renderAll();
+        }
+        
+        color.onchange=function(){
+            textbox.setColor(this.value)
+            fabric_cvs.renderAll();
+        }
+    }
+
+    function initText(text,fabric_cvs){
+        let width=fabric_cvs.width;
+        let textbox = new fabric.Textbox(text, {
+            width:width,
+            fontSize: fabric_cvs.height,
+            lockScalingFlip:true,
+            lockScalingX:true,
+            lockScalingY:true,
+            lockRotation:true,
+            lockMovementX:true,
+            lineHeight:1,
+            cursorDelay:500,
+            padding:50,
+            textAlign:'center',
+        });
+       let lineIndex=0
+        textbox.onKeyUp=function(e){
+            if(textbox.measureLine(lineIndex).width>fabric_cvs.width){
+                textbox.setFontSize(textbox.getFontSize()/2)
+            }
+            textbox.center()
+        }
+        fabric_cvs.add(textbox).setActiveObject(textbox);        
+   
+        textbox.center()
+        textbox.enterEditing()
+
+        return textbox;
+    }
+   
+</script>
+</html>

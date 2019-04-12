@@ -50,7 +50,7 @@ function loadImgByBlob(imgBlob,fabric_cvs,positon){
  * @param {*} positon 图片在画板中的位置
  */
 function loadImgByUrl(imgUrl,fabric_cvs,positon){
-    let oImg;
+    let oImg;imgUrl,fabric_cvs,positon
     fabric.Image.fromURL(imgUrl, function(img) {
        
         if(positon&&positon.left&&positon.top){
