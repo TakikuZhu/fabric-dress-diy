@@ -32,7 +32,9 @@
 <script>       
     function init() {
         let getImgRef=loadImgByUrl("../doc/img/liuyifei.jpg",fabric_cvs);
+       
         let imgRef;
+        let clipRef;
         normal.onclick=function(){
             if(!imgRef){
                 imgRef=getImgRef();
@@ -42,28 +44,105 @@
             }
             getImgRef=null;
            
-            imgRef.set({
-                clipTo:null
-            })
             fabric_cvs.renderAll();
         }
         circle.onclick=function(){
+            if(clipRef){
+                return;
+            }
             if(!imgRef){
                 imgRef=getImgRef();
                 if(!imgRef){
                     alert("无法获取图像引用")
+                    return;
                 }
             }
-            getImgRef=null;       
-           
-            imgRef.set({
-                clipTo:function (ctx) {
-                    ctx.arc(0, 0, imgRef.width/2, 0, Math.PI * 2, true);
-                }
-            })
+            getImgRef=null;
+
+            //创建新图层
+
             fabric_cvs.renderAll();
         }
     }
    
+
+
+    function createCanvas(){
+        //添加canvas
+        let maskCanvas=document.createElement("canvas");
+        maskCanvas.id="maskCanvas";
+        maskCanvas.style="position:fixed;pointer-events: none;z-index:2;"
+        document.body.prepend(maskCanvas);
+        //设置canvas全屏
+        maskCanvas.width = document.body.clientWidth;
+        maskCanvas.height = document.body.clientHeight;
+        let fabric_maskCanvas=new fabric.StaticCanvas('maskCanvas');
+        return fabric_maskCanvas;
+    }
+
+    function dynamicClip(imgRef,positon,canvas){
+        let isClipping = true;
+        //插入一个矩形
+        let rect =new fabric.Rect({ width: 500, height: 300,strokeWidth:10,stroke: 'green',});
+        if(positon&&positon.left&&positon.top){
+        }else{
+            positon={};
+            positon.left=(fabric_cvs.width-rect.width)/2;
+            positon.top=(fabric_cvs.height-rect.height)/2;
+            
+        }
+        rect.set(positon)
+        //填充图像
+        rect.fill = new fabric.Pattern({
+            source:imgRef._element,
+            repeat: 'no-repeat',
+            offsetX: imgRef.left-positon.left,
+            offsetY: imgRef.top-positon.top,
+
+        });
+        let oldleft=imgRef.left;
+        imgRef.on({
+            'moving': () => {
+                console.info("moving")
+                rect.fill.offsetX+=(imgRef.left-oldleft)
+                oldleft=imgRef.left
+                rect.fill = new fabric.Pattern({
+                    source:imgRef._element,
+                    repeat: 'no-repeat',
+                    offsetX: imgRef.left-positon.left,
+                    offsetY: imgRef.top-positon.top,
+
+                });
+                canvas.renderAll();
+                if (!isClipping) {
+                //     clipBox.clipClone.left = clipBox.left - state.clipLeft
+                //     clipBox.clipClone.top = clipBox.top - state.clipTop
+                //     state.canvas.renderAll()
+                //     return
+                // }
+                // let left =clipBox.left - clipBox.clipClone.left;
+                // let top = clipBox.top - clipBox.clipClone.top;
+
+                // state.clipLeft = left
+                // state.clipTop = top
+                // clipBox.fill.offsetX = -left / clipBox.clipClone.scaleX
+                // clipBox.fill.offsetY = -top / clipBox.clipClone.scaleY
+                canvas.renderAll();
+                }
+            }
+        })
+       
+        //给底图模糊
+        filterForImgObj(imgRef,[{
+                    name:"Blur",
+                    blur: 0.1
+                }])
+        canvas.add(rect);
+
+
+        return rect;
+    }
+
+
 </script>
 </html>

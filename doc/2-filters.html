@@ -94,7 +94,8 @@
 </body>
 <script>     
     function init(){
-        loadImgByUrl("../doc/img/liuyifei.jpg",fabric_cvs);
+        let getImgRef=loadImgByUrl("../doc/img/liuyifei.jpg",fabric_cvs);
+        let imgRef;
         let curFilters=[]
         grayscaleSwitch.onclick=function(e){    
             if(grayscaleSwitch.checked){
@@ -118,7 +119,14 @@
                     ele.disabled=true;
                 });
             }
-            filterForActiveObject(curFilters)
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
         average.onclick=function(e){
             if(average.checked){
@@ -127,7 +135,14 @@
                         ele["mode"]="average";
                     }
                 })
-                filterForActiveObject(curFilters)
+                if(!imgRef){
+                    imgRef=getImgRef();
+                    if(!imgRef){
+                        alert("无法获取图像引用")
+                    }
+                }
+                getImgRef=null;
+                filterForImgObj(imgRef,curFilters)
             }            
         }
         lightness.onclick=function(e){
@@ -137,7 +152,14 @@
                         ele["mode"]="lightness";
                     }
                 })
-                filterForActiveObject(curFilters)
+                if(!imgRef){
+                    imgRef=getImgRef();
+                    if(!imgRef){
+                        alert("无法获取图像引用")
+                    }
+                }
+                getImgRef=null;
+                filterForImgObj(imgRef,curFilters)
             }            
         }
         luminosity.onclick=function(e){
@@ -147,7 +169,14 @@
                         ele["mode"]="luminosity";
                     }
                 })
-                filterForActiveObject(curFilters)
+                if(!imgRef){
+                    imgRef=getImgRef();
+                    if(!imgRef){
+                        alert("无法获取图像引用")
+                    }
+                }
+                getImgRef=null;
+                filterForImgObj(imgRef,curFilters)
             }            
         }
        
@@ -162,7 +191,14 @@
                     return ele.name!="Invert";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         sepiaSwitch.onclick=function(e){
@@ -176,7 +212,14 @@
                     return ele.name!="Sepia";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
     
         blackwhiteSwitch.onclick=function(e){
@@ -190,7 +233,14 @@
                     return ele.name!="BlackWhite";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         brownieSwitch.onclick=function(e){
@@ -204,7 +254,14 @@
                     return ele.name!="Brownie";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         vintageSwitch.onclick=function(e){
@@ -218,7 +275,14 @@
                     return ele.name!="Vintage";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         kodachromeSwitch.onclick=function(e){
@@ -232,7 +296,14 @@
                     return ele.name!="Kodachrome";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         technicolorSwitch.onclick=function(e){
@@ -246,7 +317,14 @@
                     return ele.name!="Technicolor";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters) 
         }
 
         polaroidSwitch.onclick=function(e){
@@ -260,7 +338,14 @@
                     return ele.name!="Polaroid";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters) 
         }
 
         pixelateSwitch.onclick=function(e){
@@ -278,7 +363,14 @@
                 })
                 pixelateRange.disabled=true;
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         pixelateRange.onchange=function(e){
@@ -287,7 +379,14 @@
                     ele["blocksize"]=parseInt(pixelateRange.value, 10);
                 }
             })
-            filterForActiveObject(curFilters)  
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         blurSwitch.onclick=function(e){
@@ -305,7 +404,14 @@
                 })
                 blurRange.disabled=true;
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         blurRange.onchange=function(e){
@@ -314,7 +420,14 @@
                     ele["blur"]=parseFloat(blurRange.value, 10);
                 }
             })
-            filterForActiveObject(curFilters)  
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         sharpenSwitch.onclick=function(e){
@@ -328,7 +441,14 @@
                     return ele.name!="Sharpen";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
 
         embossSwitch.onclick=function(e){
@@ -342,7 +462,14 @@
                     return ele.name!="Emboss";
                 })
             }
-            filterForActiveObject(curFilters) 
+            if(!imgRef){
+                imgRef=getImgRef();
+                if(!imgRef){
+                    alert("无法获取图像引用")
+                }
+            }
+            getImgRef=null;
+            filterForImgObj(imgRef,curFilters)
         }
     }
 

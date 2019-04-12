@@ -17,6 +17,8 @@ window.onload=function(){
             tip.classList.add("close")
         }
     }
+    //尝试开启Webgl滤镜
+    // tryStartWebglFilterBackend()
     init()
 }
 

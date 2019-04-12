@@ -60,10 +60,16 @@ function loadImgByUrl(imgUrl,fabric_cvs,positon){
             positon.top=(fabric_cvs.height-img.height)/2;
             
         }
-        oImg = img.set(positon);
+        img.set(positon);
+        // img.set({
+        //     selectable: false,
+        //     hoverCursor: 'default',
+        //     evented: false,
+        //     hasControls: false,
+        //     perPixelTargetFind: false,
+        // })
+        oImg = img;
         fabric_cvs.add(oImg);
-        //默认选中
-        fabric_cvs.setActiveObject(oImg)
     });
     function getImgRef(){
         return oImg;
@@ -71,18 +77,14 @@ function loadImgByUrl(imgUrl,fabric_cvs,positon){
     return getImgRef;
 }
 
+
 /**
- * 对激活对象增加滤镜
+ * 
+ * @param {*} imgObj 图像对象
  * @param {*} filters 滤镜数组
  */
-function filterForActiveObject(filters){  
-
-    var obj = fabric_cvs.getActiveObject();
-    if(!obj){
-        alert("滤镜失败，没有激活对象")
-        return
-    }
-    obj.filters=[];
+function filterForImgObj(imgObj,filters){
+    imgObj.filters=[];
     for(let filterObj of filters){
         let filter;
         if(filterObj.name==="Sharpen"){
@@ -105,9 +107,9 @@ function filterForActiveObject(filters){
                 }
             }
         }        
-        obj.filters.push(filter)
+        imgObj.filters.push(filter)
     }
-    obj.applyFilters();
+    imgObj.applyFilters();
     fabric_cvs.renderAll();
 }
 
@@ -124,5 +126,5 @@ function filterForActiveObject(filters){
     fabric.filterBackend = fabric.initFilterBackend();
     if(webglBackend){
         fabric.filterBackend = webglBackend;
-    }   
+    }
 })()
